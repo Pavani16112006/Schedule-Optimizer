@@ -23,5 +23,7 @@ Sleep-hour protection
 Daily schedule generation
 
 Conflict-free task allocation
+
 Priority-based scheduling
+
 Deadline-aware planning
