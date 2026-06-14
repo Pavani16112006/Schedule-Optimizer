@@ -5,7 +5,7 @@
 # -----------------------------
 
 sleep_hours = 8
-wake_time = 7  # 7 AM
+wake_time = int(input("Wake time?: "))
 
 fixed_activities = [
     {
