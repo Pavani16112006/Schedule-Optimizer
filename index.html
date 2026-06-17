@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule Optimizer</title>
+</head>
+<body>
+
+<h1>Schedule Optimizer</h1>
+
+<label>Sleep Time:</label>
+<input type="time" id="sleepTime">
+
+<br><br>
+
+<label>Wake Up Time:</label>
+<input type="time" id="wakeTime">
+
+<br><br>
+
+<label>Daily Tasks (comma separated)</label>
+<input type="text" id="tasks">
+
+<br><br>
+
+<label>Priorities (same order, 1-5)</label>
+<input type="text" id="priorities">
+
+<br><br>
+
+<label>Special Events</label>
+<input type="text" id="events">
+
+<br><br>
+
+<button onclick="generateSchedule()">
+Generate Schedule
+</button>
+
+<h2>Your Schedule</h2>
+<div id="output"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
