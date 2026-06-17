@@ -16,7 +16,6 @@ Rest breaks
 This project aims to generate balanced schedules that improve productivity without having to sacrifice health and well-being.
 
 ## Features:
-Task input with duration
 
 Sleep-hour protection
 
