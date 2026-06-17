@@ -1,45 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule Optimizer</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>Schedule Optimizer</h1>
+    <div class="container">
 
-<label>Sleep Time:</label>
-<input type="time" id="sleepTime">
+        <h1>📅 Schedule Optimizer</h1>
 
-<br><br>
+        <p>
+            Create a healthy and productive schedule while protecting
+            your sleep and break times.
+        </p>
 
-<label>Wake Up Time:</label>
-<input type="time" id="wakeTime">
+        <label for="sleepTime">
+            What time do you want to sleep?
+        </label>
+        <input type="time" id="sleepTime">
 
-<br><br>
+        <label for="wakeTime">
+           <br> What time do you want to wake up?
+        </label>
+        <input type="time" id="wakeTime">
 
-<label>Daily Tasks (comma separated)</label>
-<input type="text" id="tasks">
+        <label for="tasks">
+            <br>What are your daily tasks?<br>
+        </label>
+        <textarea
+            id="tasks"
+            rows="5"
+            placeholder="Example:
+Gym
+DSA Practice
+Project Work"></textarea>
 
-<br><br>
+        <label for="priorities">
+           <br> Priority of each task
+            (1 = Very Important, 5 = Less Important)<br>
+        </label>
+        <textarea
+            id="priorities"
+            rows="5"
+            placeholder="Example:
+1
+2
+3"></textarea>
 
-<label>Priorities (same order, 1-5)</label>
-<input type="text" id="priorities">
+        <label for="events">
+           <br> Any special events today?<br>
+        </label>
+        <textarea
+            id="events"
+            rows="4"
+            placeholder="Example:
+Doctor Appointment 3 PM
+Birthday Dinner 8 PM"></textarea>
+<br>
+<br>
 
-<br><br>
+        <button onclick="generateSchedule()">
+            Generate Schedule
+        </button>
 
-<label>Special Events</label>
-<input type="text" id="events">
+        <div id="output">
+           <br> Your optimized schedule will appear here.
+        </div>
 
-<br><br>
+    </div>
 
-<button onclick="generateSchedule()">
-Generate Schedule
-</button>
-
-<h2>Your Schedule</h2>
-<div id="output"></div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
