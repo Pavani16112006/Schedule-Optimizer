@@ -1,153 +1,172 @@
 from datetime import datetime, timedelta
 
 # -----------------------------
-# USER INPUT
-# -----------------------------
-
-sleep_time = "23:00"
-wake_time = "07:00"
-
-tasks = [
-    {"name": "Project Work", "duration": 120, "priority": 1},
-    {"name": "DSA Practice", "duration": 90, "priority": 2},
-    {"name": "Gym", "duration": 60, "priority": 3},
-]
-
-special_events = [
-    {
-        "name": "College",
-        "start": "09:00",
-        "end": "16:00"
-    }
-]
-
-# -----------------------------
 # HELPER FUNCTIONS
 # -----------------------------
 
-def to_datetime(time_string):
-    return datetime.strptime(time_string, "%H:%M")
-
+def to_time(time_str):
+    return datetime.strptime(time_str, "%H:%M")
 
 def format_time(dt):
     return dt.strftime("%H:%M")
 
-
 # -----------------------------
-# SCHEDULER
+# USER INPUT
 # -----------------------------
 
-def generate_schedule():
+sleep_time = input("Sleep Time (HH:MM): ")
+wake_time = input("Wake Time (HH:MM): ")
 
-    schedule = []
+# Tasks
+tasks = []
 
-    # Sort tasks by priority
-    sorted_tasks = sorted(
-        tasks,
-        key=lambda x: x["priority"]
-    )
+num_tasks = int(input("\nHow many daily tasks? "))
 
-    current_time = to_datetime(wake_time)
+for i in range(num_tasks):
+    print(f"\nTask {i+1}")
 
-    # Morning free slot before events
-    first_event = special_events[0]
-    event_start = to_datetime(first_event["start"])
+    name = input("Task Name: ")
+    duration = int(input("Duration (minutes): "))
+    priority = int(input("Priority (1 = Highest): "))
 
-    for task in sorted_tasks:
-
-        duration = timedelta(minutes=task["duration"])
-
-        if current_time + duration <= event_start:
-
-            schedule.append({
-                "task": task["name"],
-                "start": format_time(current_time),
-                "end": format_time(current_time + duration)
-            })
-
-            current_time += duration
-
-            # Add tea break
-            schedule.append({
-                "task": "Tea Break ☕",
-                "start": format_time(current_time),
-                "end": format_time(
-                    current_time + timedelta(minutes=15)
-                )
-            })
-
-            current_time += timedelta(minutes=15)
-
-    # Add fixed events
-    for event in special_events:
-
-        schedule.append({
-            "task": event["name"],
-            "start": event["start"],
-            "end": event["end"]
-        })
-
-    # Continue after last event
-    current_time = to_datetime(
-        special_events[-1]["end"]
-    )
-
-    for task in sorted_tasks:
-
-        already_scheduled = any(
-            item["task"] == task["name"]
-            for item in schedule
-        )
-
-        if not already_scheduled:
-
-            duration = timedelta(
-                minutes=task["duration"]
-            )
-
-            schedule.append({
-                "task": task["name"],
-                "start": format_time(current_time),
-                "end": format_time(current_time + duration)
-            })
-
-            current_time += duration
-
-            # Break after each task
-            schedule.append({
-                "task": "Tea Break ☕",
-                "start": format_time(current_time),
-                "end": format_time(
-                    current_time + timedelta(minutes=15)
-                )
-            })
-
-            current_time += timedelta(minutes=15)
-
-    # Sleep block
-    schedule.append({
-        "task": "Sleep 😴",
-        "start": sleep_time,
-        "end": wake_time
+    tasks.append({
+        "name": name,
+        "duration": duration,
+        "priority": priority
     })
 
-    return sorted(
-        schedule,
-        key=lambda x: x["start"]
-    )
+# Special Events
+events = []
 
+num_events = int(input("\nHow many special events? "))
+
+for i in range(num_events):
+    print(f"\nEvent {i+1}")
+
+    name = input("Event Name: ")
+    start = input("Start Time (HH:MM): ")
+    end = input("End Time (HH:MM): ")
+
+    events.append({
+        "name": name,
+        "start": start,
+        "end": end
+    })
 
 # -----------------------------
-# RUN
+# FIXED MEAL BREAKS
 # -----------------------------
 
-daily_schedule = generate_schedule()
+events.extend([
+    {
+        "name": "Breakfast 🍳",
+        "start": "07:30",
+        "end": "08:00"
+    },
+    {
+        "name": "Lunch 🍱",
+        "start": "13:00",
+        "end": "14:00"
+    },
+    {
+        "name": "Dinner 🍽️",
+        "start": "20:00",
+        "end": "20:45"
+    }
+])
 
-print("\nOPTIMIZED DAILY SCHEDULE\n")
+# -----------------------------
+# SORT EVENTS
+# -----------------------------
 
-for item in daily_schedule:
-    print(
-        f"{item['start']} - "
-        f"{item['end']} | "
-        f"{item['task']}"
-    )
+events.sort(key=lambda x: x["start"])
+
+# -----------------------------
+# BUILD SCHEDULE
+# -----------------------------
+
+schedule = []
+
+# Add fixed events first
+for event in events:
+    schedule.append({
+        "start": event["start"],
+        "end": event["end"],
+        "activity": event["name"]
+    })
+
+# Sort tasks by priority
+tasks.sort(key=lambda x: x["priority"])
+
+current_time = to_time(wake_time)
+
+for task in tasks:
+
+    duration = timedelta(minutes=task["duration"])
+
+    while True:
+
+        conflict = False
+
+        for item in schedule:
+
+            event_start = to_time(item["start"])
+            event_end = to_time(item["end"])
+
+            proposed_end = current_time + duration
+
+            if (
+                current_time < event_end
+                and proposed_end > event_start
+            ):
+                current_time = event_end
+                conflict = True
+                break
+
+        if not conflict:
+            break
+
+    task_end = current_time + duration
+
+    schedule.append({
+        "start": format_time(current_time),
+        "end": format_time(task_end),
+        "activity": task["name"]
+    })
+
+    current_time = task_end
+
+    # Tea break after each task
+    tea_end = current_time + timedelta(minutes=15)
+
+    schedule.append({
+        "start": format_time(current_time),
+        "end": format_time(tea_end),
+        "activity": "Tea Break ☕"
+    })
+
+    current_time = tea_end
+
+# Sleep block
+schedule.append({
+    "start": sleep_time,
+    "end": wake_time,
+    "activity": "Sleep 😴"
+})
+
+# -----------------------------
+# DISPLAY TABLE
+# -----------------------------
+
+schedule.sort(key=lambda x: x["start"])
+
+print("\n" + "=" * 60)
+print("OPTIMIZED DAILY SCHEDULE")
+print("=" * 60)
+
+print(f"{'TIME':<20} {'ACTIVITY'}")
+print("-" * 60)
+
+for item in schedule:
+    time_slot = f"{item['start']} - {item['end']}"
+    print(f"{time_slot:<20} {item['activity']}")
