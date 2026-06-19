@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -6,76 +7,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule Optimizer</title>
 
-    <link rel="stylesheet" href="style.css">
+```
+<link rel="stylesheet" href="style.css">
+
+<!-- Art Deco Font -->
+<link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+```
+
 </head>
 
 <body>
 
-    <div class="container">
+```
+<div class="container">
 
-        <h1>📅 Schedule Optimizer</h1>
+    <h1>📅 Schedule Optimizer</h1>
 
-        <p>
-            Create a healthy and productive schedule while protecting
-            your sleep and break times.
-        </p>
+    <p>
+        Create a healthy and productive schedule while protecting
+        your sleep and break times.
+    </p>
 
-        <label for="sleepTime">
-            What time do you want to sleep?
-        </label>
-        <input type="time" id="sleepTime">
+    <label>Sleep Time</label>
+    <input type="time" id="sleepTime">
 
-        <label for="wakeTime">
-           <br> What time do you want to wake up?
-        </label>
-        <input type="time" id="wakeTime">
+    <label>Wake Up Time</label>
+    <input type="time" id="wakeTime">
 
-        <label for="tasks">
-            <br>What are your daily tasks?<br>
-        </label>
-        <textarea
-            id="tasks"
-            rows="5"
-            placeholder="Example:
-Gym
+    <label>Daily Tasks (one per line)</label>
+    <textarea
+        id="tasks"
+        rows="5"
+        placeholder="Gym
+```
+
 DSA Practice
 Project Work"></textarea>
 
-        <label for="priorities">
-           <br> Priority of each task
-            (1 = Very Important, 5 = Less Important)<br>
-        </label>
-        <textarea
-            id="priorities"
-            rows="5"
-            placeholder="Example:
-1
+```
+    <label>Duration of Tasks (minutes, one per line)</label>
+    <textarea
+        id="durations"
+        rows="5"
+        placeholder="60
+```
+
+120
+180"></textarea>
+
+```
+    <label>Priority of Tasks (1 = Highest, 5 = Lowest)</label>
+    <textarea
+        id="priorities"
+        rows="5"
+        placeholder="1
+```
+
 2
 3"></textarea>
 
-        <label for="events">
-           <br> Any special events today?<br>
-        </label>
-        <textarea
-            id="events"
-            rows="4"
-            placeholder="Example:
-Doctor Appointment 3 PM
-Birthday Dinner 8 PM"></textarea>
-<br>
-<br>
+```
+    <label>Special Events (one per line)</label>
+    <textarea
+        id="events"
+        rows="4"
+        placeholder="College
+```
 
-        <button onclick="generateSchedule()">
-            Generate Schedule
-        </button>
+Doctor Appointment"></textarea>
 
-        <div id="output">
-           <br> Your optimized schedule will appear here.<br>
-        </div>
+```
+    <label>Event Start Times (one per line)</label>
+    <textarea
+        id="eventStarts"
+        rows="4"
+        placeholder="09:00
+```
+
+18:00"></textarea>
+
+```
+    <label>Event End Times (one per line)</label>
+    <textarea
+        id="eventEnds"
+        rows="4"
+        placeholder="16:00
+```
+
+19:00"></textarea>
+
+```
+    <button onclick="generateSchedule()">
+        Generate Schedule
+    </button>
+
+    <div id="output">
+
+        <h2>Your Schedule</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Event</th>
+                </tr>
+            </thead>
+
+            <tbody id="scheduleTable">
+            </tbody>
+
+        </table>
 
     </div>
 
-    <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
+```
 
 </body>
 
