@@ -1,48 +1,127 @@
 function generateSchedule() {
 
-    const sleepTime =
-        document.getElementById("sleepTime").value;
+```
+const sleepTime =
+    document.getElementById("sleepTime").value;
 
-    const wakeTime =
-        document.getElementById("wakeTime").value;
+const wakeTime =
+    document.getElementById("wakeTime").value;
 
-    const tasks =
-        document.getElementById("tasks")
+const tasks =
+    document.getElementById("tasks")
         .value
-        .split(",");
+        .split("\n")
+        .filter(task => task.trim() !== "");
 
-    const priorities =
-        document.getElementById("priorities")
+const durations =
+    document.getElementById("durations")
         .value
-        .split(",");
+        .split("\n");
 
-    let output =
-        "<h3>Optimized Schedule</h3>";
+const priorities =
+    document.getElementById("priorities")
+        .value
+        .split("\n");
 
-    output += `
-    Sleep: ${sleepTime}
-    <br>
-    Wake Up: ${wakeTime}
-    <br><br>
-    `;
+const events =
+    document.getElementById("events")
+        .value
+        .split("\n")
+        .filter(event => event.trim() !== "");
 
-    tasks.forEach((task, index) => {
-        output += `
-        ${task.trim()}
-        (Priority ${priorities[index]})
-        <br>
-        `;
+const eventStarts =
+    document.getElementById("eventStarts")
+        .value
+        .split("\n");
+
+const eventEnds =
+    document.getElementById("eventEnds")
+        .value
+        .split("\n");
+
+const scheduleTable =
+    document.getElementById("scheduleTable");
+
+scheduleTable.innerHTML = "";
+
+let schedule = [];
+
+// Sleep
+schedule.push({
+    time: `${sleepTime} - ${wakeTime}`,
+    activity: "Sleep 😴"
+});
+
+// Breakfast
+schedule.push({
+    time: "07:30 - 08:00",
+    activity: "Breakfast 🍳"
+});
+
+// Lunch
+schedule.push({
+    time: "13:00 - 14:00",
+    activity: "Lunch 🍱"
+});
+
+// Dinner
+schedule.push({
+    time: "20:00 - 20:45",
+    activity: "Dinner 🍽️"
+});
+
+// Special Events
+for (let i = 0; i < events.length; i++) {
+
+    schedule.push({
+        time: `${eventStarts[i]} - ${eventEnds[i]}`,
+        activity: events[i]
+    });
+}
+
+// Tasks with priorities
+let taskObjects = [];
+
+for (let i = 0; i < tasks.length; i++) {
+
+    taskObjects.push({
+        name: tasks[i],
+        duration: durations[i],
+        priority: parseInt(priorities[i])
+    });
+}
+
+taskObjects.sort((a, b) =>
+    a.priority - b.priority
+);
+
+taskObjects.forEach(task => {
+
+    schedule.push({
+        time: `${task.duration} mins`,
+        activity:
+            `${task.name} (Priority ${task.priority})`
     });
 
-    output += `
-    <br>
-    Tea Break: 11:00 AM
-    <br>
-    Lunch Break: 1:00 PM
-    <br>
-    Evening Break: 5:00 PM
+    schedule.push({
+        time: "15 mins",
+        activity: "Tea Break ☕"
+    });
+
+});
+
+schedule.forEach(item => {
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${item.time}</td>
+        <td>${item.activity}</td>
     `;
 
-    document.getElementById("output")
-        .innerHTML = output;
+    scheduleTable.appendChild(row);
+});
+```
+
 }
