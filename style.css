@@ -1,53 +1,87 @@
-/* style.css */
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
-    padding: 30px;
-}
-
-h1 {
-    text-align: center;
+background-color: #ffd6e8;
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 30px;
 }
 
 .container {
-    max-width: 700px;
-    margin: auto;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
+max-width: 900px;
+margin: auto;
+background: white;
+padding: 30px;
+border-radius: 20px;
+box-shadow: 0 0 15px rgba(0,0,0,0.15);
+}
+
+h1 {
+text-align: center;
+color: hotpink;
+font-family: 'Monoton', cursive;
+font-size: 3rem;
+margin-bottom: 20px;
+}
+
+p {
+text-align: center;
+margin-bottom: 30px;
 }
 
 label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
+display: block;
+margin-top: 15px;
+font-weight: bold;
 }
 
 input,
 textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+width: 100%;
+padding: 12px;
+margin-top: 8px;
+border-radius: 8px;
+border: 1px solid #aac7ff;
+background-color: #eaf3ff;
+box-sizing: border-box;
 }
 
 button {
-    margin-top: 20px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+width: 100%;
+margin-top: 25px;
+padding: 15px;
+font-size: 18px;
+border: none;
+border-radius: 10px;
+background-color: hotpink;
+color: white;
+cursor: pointer;
 }
 
 button:hover {
-    opacity: 0.9;
+opacity: 0.9;
 }
 
 #output {
-    margin-top: 25px;
-    padding: 15px;
-    border-radius: 5px;
-    background-color: #f7f7f7;
+margin-top: 40px;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 15px;
+}
+
+th {
+background-color: #9caf88;
+color: white;
+padding: 12px;
+}
+
+td {
+background-color: #dce8d2;
+padding: 12px;
+border: 1px solid #b5c7a8;
+}
+
+h2 {
+color: #4d6545;
 }
